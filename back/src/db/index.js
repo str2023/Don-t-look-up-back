@@ -1,4 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const User = require("./models/userModel");
+require('dotenv').config()
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -15,4 +17,4 @@ db.on("error", (error) =>
 );
 
 
-// module.exports = 
+module.exports = User;

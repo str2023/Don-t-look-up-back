@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const nanoid = require('nanoid');
+const { nanoid } = require('nanoid');
 
 const UserSchema = new Schema(
   {
@@ -33,4 +33,8 @@ const UserSchema = new Schema(
   },
 );
 
-exports.UserModel = model('User', UserSchema);
+// exports.UserModel = model('User', UserSchema);
+
+const UserModel = model('User', UserSchema);
+
+module.exports = UserModel;

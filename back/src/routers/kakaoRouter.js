@@ -64,7 +64,7 @@ kakaoRouter.get('/login/callback', async (req, res) => {
 
   const kakaoUserInfo = kakaoUser.data;
 
-  // 구글 사용자 정보를 정제하여 loginInfo에 저장
+  // 카카오 사용자 정보를 정제하여 loginInfo에 저장
   const { email } = kakaoUserInfo.kakao_account;
   const password = `${kakaoUserInfo.id}${Math.random().toString(36).slice(2)};`; // pw는 유저id + 랜덤 문자열 조합
   const nickName = kakaoUserInfo.properties.nickname;

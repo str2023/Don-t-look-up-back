@@ -1,0 +1,8 @@
+{
+  "client_id": "e2a64dba4206c2b1f60413a7a3b08f97",
+  "client_secret": "U1SKY2oX5LdAfIQPOxjJadiD1h6ptF9R",
+  "redirect_uri": [
+    "http://localhost:5001/oauth/login/callback",
+    "http://localhost:5001/oauth/register/callback"
+  ]
+}

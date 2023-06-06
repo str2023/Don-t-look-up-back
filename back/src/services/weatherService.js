@@ -1,14 +1,11 @@
 const api = require('../utils/api');
 const { Weather } = require('../db');
-
-// YYYYMMDDHH
-let time = new Date();
-time.setHours(time.getHours() + 9);
-time = time.toISOString().replaceAll('-', '').replace('T', '').slice(0, 10);
+const { getTime } = require('../utils/getTime');
 
 const getUVIdx = async ({ area }) => {
   const areaNo = area || 1100000000; // 추후 카카오맵API 연동
   const addressName = '서울'; // 추후 카카오맵API 연동
+  const time = getTime().YMDH;
   const weather = await Weather.findByAreaNo({ areaNo });
   if (weather) {
     // DB에 날씨 정보가 있다면 그 값을 반환
@@ -27,4 +24,14 @@ const getUVIdx = async ({ area }) => {
   return UVIdx;
 };
 
-module.exports = { getUVIdx };
+const getUltraSrtNcst = async ({ area }) => {
+  const { nx, ny } = area || { nx: 55, ny: 127 };
+  const time = getTime();
+  const date = time.YMD;
+  const hour = `${time.HH}00`;
+  const res = await api.getUltraSrtNcst(date, hour, nx, ny);
+  const UltraSrtNcst = res.data.response;
+  return UltraSrtNcst;
+};
+
+module.exports = { getUVIdx, getUltraSrtNcst };

@@ -22,4 +22,22 @@ weatherRouter.get(
   }),
 );
 
+weatherRouter.get(
+  '/UltraSrtFcst',
+  asyncHandler(async (req, res, next) => {
+    const { area } = req.body;
+    const UltraSrtFcst = await weatherService.getUltraSrtFcst({ area });
+    res.status(200).send(UltraSrtFcst);
+  }),
+);
+
+weatherRouter.get(
+  '/VilageFcst',
+  asyncHandler(async (req, res, next) => {
+    const { area } = req.body;
+    const VilageFcst = await weatherService.getVilageFcst({ area });
+    res.status(200).send(VilageFcst);
+  }),
+);
+
 module.exports = weatherRouter;

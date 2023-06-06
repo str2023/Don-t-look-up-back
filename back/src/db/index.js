@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Weather = require('./models/Weather');
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -17,4 +18,4 @@ db.on('error', (error) =>
   ),
 );
 
-module.exports = User;
+module.exports = { User, Weather };

@@ -1,17 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-const ItemSchema = new Schema({
-  weather: {
+const ClothesSchema = new Schema({
+  userId: {
+    // 커스텀 옷차림
     type: String,
+  },
+  weatherCondition: {
+    type: String,
+  },
+  temp: {
+    type: Number,
   },
   item: {
     type: String,
-  },
-});
-
-const ClothesSchema = new Schema({
-  temp: {
-    type: Number,
   },
   top: {
     type: String,

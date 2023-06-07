@@ -16,9 +16,8 @@ const getUVIdx = async (areaNo, time) => {
   });
 };
 
-const getVilageFcst = async (url, date, hour, nx, ny) => {
-  console.log(`${url} API 요청`);
-  return axios.get(url, {
+const getVilageFcst = async (url, date, hour, nx, ny) =>
+  axios.get(url, {
     baseURL: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0',
     params: {
       serviceKey: process.env.WEATHER_DKEY,
@@ -31,6 +30,5 @@ const getVilageFcst = async (url, date, hour, nx, ny) => {
       ny,
     },
   });
-};
 
 module.exports = { getUVIdx, getVilageFcst };

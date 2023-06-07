@@ -16,14 +16,14 @@ const getUVIdx = async (areaNo, time) => {
   });
 };
 
-const getUltraSrtNcst = async (date, hour, nx, ny) => {
+const getVilageFcst = async (url, date, hour, nx, ny) => {
   console.log('초단기실황 API 요청');
-  const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
   return axios.get(url, {
+    baseURL: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0',
     params: {
       serviceKey: process.env.WEATHER_DKEY,
       pageNo: 1,
-      numOfRows: 10,
+      numOfRows: 1000,
       dataType: 'JSON',
       base_date: date,
       base_time: hour,
@@ -33,4 +33,4 @@ const getUltraSrtNcst = async (date, hour, nx, ny) => {
   });
 };
 
-module.exports = { getUVIdx, getUltraSrtNcst };
+module.exports = { getUVIdx, getVilageFcst };

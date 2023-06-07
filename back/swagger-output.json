@@ -13,16 +13,10 @@
       "description": ""
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "securityDefinitions": {},
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/user/register": {
       "post": {
@@ -129,6 +123,28 @@
         }
       }
     },
+    "/UltraSrtFcst": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/VilageFcst": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/register": {
       "get": {
         "description": "",
@@ -173,6 +189,30 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/location": {
+      "get": {
+        "summary": "요청한 지역의 정보를 받아옵니다.",
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "지역 정보",
+            "content": {
+              "text/plain": {
+                "schema": "string"
+              }
+            }
           }
         }
       }

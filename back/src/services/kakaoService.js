@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 
-const User = require('../db');
+const User = require('../db/models/User');
 
 // register로 접근하여 인가코드 받기
 const getKakaoRegisterURL = () => {
@@ -45,8 +45,7 @@ const getKakaoRegisterToken = async (req, res) => {
       method: 'POST',
       url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${config.client_id}&client_secret=${config.client_secret}&redirect_uri=${config.redirect_uri}&code=${config.code}`,
       headers: {
-        'content-type':
-          'Content-type: application/x-www-form-urlencoded;charset=utf-8',
+        'content-type': 'Content-type: application/x-www-form-urlencoded;charset=utf-8',
       },
     });
   } catch (err) {
@@ -74,8 +73,7 @@ const getKakaoLoginToken = async (req, res) => {
       method: 'POST',
       url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${config.client_id}&client_secret=${config.client_secret}&redirect_uri=${config.redirect_uri}&code=${config.code}`,
       headers: {
-        'content-type':
-          'Content-type: application/x-www-form-urlencoded;charset=utf-8',
+        'content-type': 'Content-type: application/x-www-form-urlencoded;charset=utf-8',
       },
     });
   } catch (err) {
@@ -111,13 +109,7 @@ const getKakaoUserInfo = async ({ accessToken }) => {
 };
 
 // 카카오 유저 정보로 유저정보 저장하기
-const addKakaoUser = async ({
-  email,
-  password,
-  nickName,
-  birthDate,
-  gender,
-}) => {
+const addKakaoUser = async ({ email, password, nickName, birthDate, gender }) => {
   const hashedPassword = await bcrypt.hash(password, 10); // pw 해쉬화
   const numberedGender = gender === 'female' ? 1 : 0; // 성별 숫자화: 여성- 1 / 남성 -0
 
@@ -140,8 +132,7 @@ const getKakaoUser = async ({ email }) => {
   const user = await User.findByEmail({ email });
 
   if (!user) {
-    const errorMessage =
-      '해당 카카오 계정은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
+    const errorMessage = '해당 카카오 계정은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
     return { errorMessage };
   }
 

@@ -1,13 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../db');
+const User = require('../db/models/User');
 
 const addUser = async ({ email, nickName, password, birthDate, gender }) => {
   // 이메일 중복 확인
   const user = await User.findByEmail({ email });
   if (user) {
-    const errorMessage =
-      '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.';
+    const errorMessage = '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.';
     return { errorMessage };
   }
 
@@ -26,8 +25,7 @@ const addUser = async ({ email, nickName, password, birthDate, gender }) => {
 const getUser = async ({ email, password }) => {
   const user = await User.findByEmail({ email });
   if (!user) {
-    const errorMessage =
-      '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
+    const errorMessage = '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
     return { errorMessage };
   }
 
@@ -35,8 +33,7 @@ const getUser = async ({ email, password }) => {
   const correctPasswordHash = user.password;
   const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
   if (!isPasswordCorrect) {
-    const errorMessage =
-      '비밀번호가 일치하지 않습니다. 다시 한 번 확인해주세요.';
+    const errorMessage = '비밀번호가 일치하지 않습니다. 다시 한 번 확인해주세요.';
     return { errorMessage };
   }
 
@@ -105,8 +102,7 @@ const getUserInfo = async ({ userId }) => {
 
   // db에서 찾지 못한 경우, 에러 메시지 반환
   if (!user) {
-    const errorMessage =
-      '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
+    const errorMessage = '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해주세요.';
     return { errorMessage };
   }
 

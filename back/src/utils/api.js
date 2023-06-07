@@ -17,7 +17,7 @@ const getUVIdx = async (areaNo, time) => {
 };
 
 const getVilageFcst = async (url, date, hour, nx, ny) => {
-  console.log('초단기실황 API 요청');
+  console.log(`${url} API 요청`);
   return axios.get(url, {
     baseURL: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0',
     params: {

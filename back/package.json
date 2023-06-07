@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -r dotenv/config ./bin/www",
+    "start": "start http://localhost:5001/ & nodemon -r dotenv/config ./bin/www ",
     "start-gendoc": "node swagger.js"
   },
   "dependencies": {

@@ -55,12 +55,15 @@ const getUltraSrtNcst = async ({ Area }) => {
   // 없다면 기상청 API 통신
   const url = '/getUltraSrtNcst';
   const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const data = res.data.response.body.items.item;
   // 데이터 정제
-  const UltraSrtNcst = {};
-  res.data.response.body.items.item.forEach((obj) => {
-    UltraSrtNcst.baseDate = parseInt(obj.baseDate, 10);
-    UltraSrtNcst.baseTime = parseInt(obj.baseTime, 10);
-    UltraSrtNcst[obj.category] = parseInt(obj.obsrValue, 10);
+  const UltraSrtNcst = {
+    baseDate: parseInt(data[0].baseDate, 10),
+    baseTime: parseInt(data[0].baseTime, 10),
+    Current: {},
+  };
+  data.forEach((obj) => {
+    UltraSrtNcst.Current[obj.category] = parseInt(obj.obsrValue, 10);
   });
   // DB에 삽입갱신
   if (weather) {
@@ -94,9 +97,38 @@ const getUltraSrtFcst = async ({ Area }) => {
   // 없다면 기상청 API 통신
   const url = '/getUltraSrtFcst';
   const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const data = res.data.response.body.items.item;
   // 데이터 정제
+  const UltraSrtFcst = {
+    baseDate: parseInt(data[0].baseDate, 10),
+    baseTime: parseInt(data[0].baseTime, 10),
+    forecast: [],
+  };
+  const firstFcstTime = data[0].fcstTime;
+  const firstCategory = data[0].category;
+  data.forEach((obj) => {
+    const { category, fcstDate } = obj;
+    let { fcstValue, fcstTime } = obj;
+    fcstTime = parseInt(fcstTime, 10);
+    if (fcstTime < firstFcstTime) fcstTime += 2400;
+    const idx = (fcstTime % firstFcstTime) / 100;
+    if (firstCategory === category) {
+      UltraSrtFcst.forecast.push({});
+    }
+    UltraSrtFcst.forecast[idx].fcstDate = parseInt(fcstDate, 10);
+    UltraSrtFcst.forecast[idx].fcstTime = parseInt(obj.fcstTime, 10);
+    if (fcstValue === '강수없음') fcstValue = 0;
+    UltraSrtFcst.forecast[idx][category] = parseInt(fcstValue, 10);
+  });
   // DB에 삽입갱신
-  return res.data.response.body.items.item;
+  if (weather) {
+    const newWeather = { UltraSrtFcst };
+    await Weather.update({ addressName, newWeather });
+  } else {
+    const newWeather = { addressName, UltraSrtFcst };
+    await Weather.create({ newWeather });
+  }
+  return UltraSrtFcst;
 };
 
 // 단기 예보
@@ -120,8 +152,34 @@ const getVilageFcst = async ({ Area }) => {
   // 없다면 기상청 API 통신
   const url = '/getVilageFcst';
   const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const data = res.data.response.body.items.item;
   // 데이터 정제
+  const VilageFcst = {
+    baseDate: parseInt(data[0].baseDate, 10),
+    baseTime: parseInt(data[0].baseTime, 10),
+    forecast: [{}],
+  };
+  let temp = data[0].fcstDate + data[0].fcstTime;
+  data.forEach((obj) => {
+    const { category, fcstDate, fcstTime } = obj;
+    let { fcstValue } = obj;
+    if (temp !== fcstDate + fcstTime) {
+      VilageFcst.forecast.push({});
+      temp = fcstDate + fcstTime;
+    }
+    VilageFcst.forecast.at(-1).fcstDate = parseInt(fcstDate, 10);
+    VilageFcst.forecast.at(-1).fcstTime = parseInt(fcstTime, 10);
+    if (fcstValue === '강수없음' || fcstValue === '적설없음') fcstValue = 0;
+    VilageFcst.forecast.at(-1)[category] = parseInt(fcstValue, 10);
+  });
   // DB에 삽입갱신
+  if (weather) {
+    const newWeather = { VilageFcst };
+    await Weather.update({ addressName, newWeather });
+  } else {
+    const newWeather = { addressName, VilageFcst };
+    await Weather.create({ newWeather });
+  }
   return res.data.response.body.items.item;
 };
 

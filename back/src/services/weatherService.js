@@ -1,16 +1,11 @@
 const api = require('../utils/api');
 const { Weather } = require('../db');
 const { getTime } = require('../utils/getTime');
-const locationService = require('./locationService');
 
 // 자외선 지수
-const getUVIdx = async ({ area }) => {
-  // const areaNo = area || 1100000000; // 추후 카카오맵API 연동
-  // const addressName = '서울'; // 추후 카카오맵API 연동
-
-  const addressInfo = await locationService.getAddressInfo({ area });
-  const areaNo = addressInfo.locationNo;
-  const addressName = addressInfo.locationName;
+const getUVIdx = async ({ Area }) => {
+  const areaNo = Area.No;
+  const addressName = Area.Name;
 
   const time = getTime().YMDH;
   // DB에 있는지 날씨 조회
@@ -40,14 +35,10 @@ const getUVIdx = async ({ area }) => {
 };
 
 // 초단기 실황
-const getUltraSrtNcst = async ({ area }) => {
-  // const { nx, ny } = area || { nx: 55, ny: 127 };
-  // const addressName = '서울'; // 추후 카카오맵API 연동
-
-  const addressInfo = await locationService.getAddressInfo({ area });
-  const nx = addressInfo.x;
-  const ny = addressInfo.y;
-  const addressName = addressInfo.locationName;
+const getUltraSrtNcst = async ({ Area }) => {
+  const nx = Area.x;
+  const ny = Area.y;
+  const addressName = Area.Name;
 
   const time = getTime();
   const date = time.YMD;
@@ -83,9 +74,11 @@ const getUltraSrtNcst = async ({ area }) => {
 };
 
 // 초단기 예보
-const getUltraSrtFcst = async ({ area }) => {
-  const { nx, ny } = area || { nx: 55, ny: 127 };
-  const addressName = '서울';
+const getUltraSrtFcst = async ({ Area }) => {
+  const nx = Area.x;
+  const ny = Area.y;
+  const addressName = Area.Name;
+
   const time = getTime();
   const date = time.YMD;
   const hour = time.HH;
@@ -107,9 +100,11 @@ const getUltraSrtFcst = async ({ area }) => {
 };
 
 // 단기 예보
-const getVilageFcst = async ({ area }) => {
-  const { nx, ny } = area || { nx: 55, ny: 127 };
-  const addressName = '서울';
+const getVilageFcst = async ({ Area }) => {
+  const nx = Area.x;
+  const ny = Area.y;
+  const addressName = Area.Name;
+
   const time = getTime();
   const date = time.YMD;
   const hour = time.HM;

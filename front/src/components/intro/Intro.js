@@ -1,11 +1,25 @@
 import React from 'react';
-import { Container, Grid, Box, Typography, Paper, Button, IconButton, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { 
+    Container, 
+    Grid, 
+    Box, 
+    Typography, 
+    Paper, 
+    Button, 
+    IconButton, 
+    TextField, 
+    FormControl, 
+    FormLabel, 
+    RadioGroup, 
+    FormControlLabel, 
+    Radio 
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
 
-export function Intro() {
+function Intro() {
     const handleButtonClick = () => {
         // 클릭시 로그인 했을때 바로 메인페이지로 이동
         // 아닐시 로그인페이지로 이동
@@ -17,7 +31,6 @@ export function Intro() {
 
     return (
         <div>
-            <Header />
             <div className="banner">
                 <h1>기후에 따른 옷차림 추천 당신의 기상 패션 가이드</h1>
                 <button onClick={handleButtonClick}>시작하기</button>
@@ -28,7 +41,7 @@ export function Intro() {
             <div className="graphs-container">
             <div className="graph">
                 <h2>기후 변화 데이터 차트</h2>
-                {/* 첫번째 그래프 (년도별로 기후변화) /}
+                {/* 첫번째 그래프 (년도별로 기후변화) 그래프는 ReCharts 이용예정/}
             </div>
             <div className="graph">
                 <h2>전세계 온실가스 배출량 차트</h2>
@@ -37,5 +50,8 @@ export function Intro() {
             </div>
         </div>
     );
-};
+}
+
+export default Intro;
+
 

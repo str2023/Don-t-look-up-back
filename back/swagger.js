@@ -18,9 +18,24 @@ const doc = {
       description: '', // Tag description
     },
     // { ... }
+  ], // by default: empty object
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        in: 'header',
+        name: 'Authorization',
+        description: 'Bearer token to access these api endpoints',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+  security: [
+    {
+      bearerAuth: [],
+    },
   ],
-  securityDefinitions: {}, // by default: empty object
-  definitions: {}, // by default: empty object (Swagger 2.0)
 };
 
 const outputFile = './swagger-output.json';

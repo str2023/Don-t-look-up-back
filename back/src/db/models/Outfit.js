@@ -31,7 +31,7 @@ const update = async ({ id, newOutfit }) => {
   return updated;
 };
 
-const deleteById = async ({ id }) => {
+const deleteById = async ({ id, userId }) => {
   const removed = await OutfitModel.findOneAndDelete({ _id: id });
   return removed;
 };

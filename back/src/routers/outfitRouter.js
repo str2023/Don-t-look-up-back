@@ -29,11 +29,12 @@ outfitRouter.get(
   '/outfit/custom',
   loginRequired,
   asyncHandler(async (req, res, next) => {
-    const { userId } = req.currentUserId;
+    const userId = req.currentUserId;
     const outfits = await outfitService.getOutfitByUserId({ userId });
 
     if (outfits.errorMessage) {
       res.status(404).send(outfits.errorMessage);
+      return;
     }
 
     res.status(200).send(outfits);
@@ -44,26 +45,14 @@ outfitRouter.post(
   '/outfit/custom',
   loginRequired,
   asyncHandler(async (req, res, next) => {
-    /*  #swagger.parameters['obj'] = {
-                in: 'body',
-                description: 'User information.',
-                required: true,
-                schema: {
-                      "wx": "날씨상태",
-                      "temp": "기온",
-                      "item": "물건",
-                      "top": "상의",
-                      "bottom": "하의",
-                      "outer": "외투",
-                      "shoes": "신발",
-                      }
-        } */
-    const newOutfit = req.body;
+    const { wx, temp, item, top, bottom, outer, shoes } = req.body;
+    const newOutfit = { wx, temp, item, top, bottom, outer, shoes };
     newOutfit.userId = req.currentUserId;
     const outfit = await outfitService.createOutfit({ newOutfit });
 
     if (outfit.errorMessage) {
       res.status(400).send(outfit.errorMessage);
+      return;
     }
 
     res.status(201).send(outfit);
@@ -80,6 +69,7 @@ outfitRouter.put(
 
     if (outfit.errorMessage) {
       res.status(400).send(outfit.errorMessage);
+      return;
     }
 
     res.status(200).send(outfit);
@@ -92,10 +82,11 @@ outfitRouter.delete(
   asyncHandler(async (req, res, next) => {
     const { id } = req.body;
     const userId = req.currentUserId;
-    const outfit = await outfitService.createOutfit({ id, userId });
+    const outfit = await outfitService.deleteOutfit({ id, userId });
 
     if (outfit.errorMessage) {
       res.status(400).send(outfit.errorMessage);
+      return;
     }
 
     res.status(201).send(outfit);

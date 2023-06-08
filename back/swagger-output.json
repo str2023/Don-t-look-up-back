@@ -16,7 +16,6 @@
       "description": ""
     }
   ],
-  "securityDefinitions": {},
   "paths": {
     "/outfit": {
       "get": {
@@ -119,45 +118,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "User information.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "wx": {
-                  "type": "string",
-                  "example": "날씨상태"
-                },
-                "temp": {
-                  "type": "string",
-                  "example": "기온"
-                },
-                "item": {
-                  "type": "string",
-                  "example": "물건"
-                },
-                "top": {
-                  "type": "string",
-                  "example": "상의"
-                },
-                "bottom": {
-                  "type": "string",
-                  "example": "하의"
-                },
-                "outer": {
-                  "type": "string",
-                  "example": "외투"
-                },
-                "shoes": {
-                  "type": "string",
-                  "example": "신발"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -177,7 +137,25 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
+                  "wx": {
+                    "example": "any"
+                  },
+                  "temp": {
+                    "example": "any"
+                  },
+                  "item": {
+                    "example": "any"
+                  },
+                  "top": {
+                    "example": "any"
+                  },
+                  "bottom": {
+                    "example": "any"
+                  },
+                  "outer": {
+                    "example": "any"
+                  },
+                  "shoes": {
                     "example": "any"
                   }
                 }
@@ -504,5 +482,22 @@
         }
       }
     }
-  }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token to access these api endpoints",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }

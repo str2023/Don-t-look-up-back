@@ -13,204 +13,424 @@
       "description": ""
     }
   ],
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "securityDefinitions": {},
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/user/register": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "nickName": {
-                  "example": "any"
-                },
-                "birthDate": {
-                  "example": "any"
-                },
-                "gender": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
-    "/user/login": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/user/current": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/UVIdx": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "날씨"
+        ],
+        "description": "자외선 지수",
+        "parameters": [
+          {
+            "name": "",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "area": {
+                  "type": "string",
+                  "example": "시-구-동 지번 주소"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "자외선지수",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "UVIdx": {
+                  "type": "object",
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "example": "관측시간"
+                    },
+                    "h0": {
+                      "type": "string",
+                      "example": "현재"
+                    },
+                    "h3": {
+                      "type": "string",
+                      "example": "3시간후"
+                    },
+                    "h6": {
+                      "type": "string",
+                      "example": "6시간후"
+                    },
+                    "h9": {
+                      "type": "string",
+                      "example": "9시간후"
+                    },
+                    "h12": {
+                      "type": "string",
+                      "example": "12시간후"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
     },
     "/UltraSrtNcst": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "날씨"
+        ],
+        "description": "초단기 실황",
+        "parameters": [
+          {
+            "name": "",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "area": {
+                  "type": "string",
+                  "example": "시-구-동 지번 주소"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "초단기 실황",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "UltraSrtNcst": {
+                  "type": "object",
+                  "properties": {
+                    "baseDate": {
+                      "type": "string",
+                      "example": "관측날짜"
+                    },
+                    "baseTime": {
+                      "type": "string",
+                      "example": "관측시간"
+                    },
+                    "Current": {
+                      "type": "object",
+                      "properties": {
+                        "fcstDate": {
+                          "type": "string",
+                          "example": "예보날짜"
+                        },
+                        "fcstTime": {
+                          "type": "string",
+                          "example": "예보시간"
+                        },
+                        "POP": {
+                          "type": "string",
+                          "example": "강수확률"
+                        },
+                        "PTY": {
+                          "type": "string",
+                          "example": "강수형태코드값"
+                        },
+                        "PCP": {
+                          "type": "string",
+                          "example": "1시간 강수량 mm"
+                        },
+                        "RN1": {
+                          "type": "string",
+                          "example": "1시간 강수량 mm"
+                        },
+                        "T1H": {
+                          "type": "string",
+                          "example": "기온 ℃"
+                        },
+                        "TMP": {
+                          "type": "string",
+                          "example": "1시간 기온"
+                        },
+                        "TMN": {
+                          "type": "string",
+                          "example": "일 최저기온"
+                        },
+                        "TMX": {
+                          "type": "string",
+                          "example": "일 최고기온"
+                        },
+                        "SNO": {
+                          "type": "string",
+                          "example": "1시간 신적설"
+                        },
+                        "SKY": {
+                          "type": "string",
+                          "example": "하늘상태 코드값"
+                        },
+                        "REH": {
+                          "type": "string",
+                          "example": "습도 %"
+                        },
+                        "VEC": {
+                          "type": "string",
+                          "example": "풍향 deg"
+                        },
+                        "WSD": {
+                          "type": "string",
+                          "example": "풍속 m/s"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
     },
     "/UltraSrtFcst": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "날씨"
+        ],
+        "description": "초단기 예보",
+        "parameters": [
+          {
+            "name": "",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "area": {
+                  "type": "string",
+                  "example": "시-구-동 지번 주소"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "초단기 예보",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "UltraSrtNcst": {
+                  "type": "object",
+                  "properties": {
+                    "baseDate": {
+                      "type": "string",
+                      "example": "관측날짜"
+                    },
+                    "baseTime": {
+                      "type": "string",
+                      "example": "관측시간"
+                    },
+                    "Current": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "fcstDate": {
+                            "type": "string",
+                            "example": "예보날짜"
+                          },
+                          "fcstTime": {
+                            "type": "string",
+                            "example": "예보시간"
+                          },
+                          "POP": {
+                            "type": "string",
+                            "example": "강수확률"
+                          },
+                          "PTY": {
+                            "type": "string",
+                            "example": "강수형태코드값"
+                          },
+                          "PCP": {
+                            "type": "string",
+                            "example": "1시간 강수량 mm"
+                          },
+                          "RN1": {
+                            "type": "string",
+                            "example": "1시간 강수량 mm"
+                          },
+                          "T1H": {
+                            "type": "string",
+                            "example": "기온 ℃"
+                          },
+                          "TMP": {
+                            "type": "string",
+                            "example": "1시간 기온"
+                          },
+                          "TMN": {
+                            "type": "string",
+                            "example": "일 최저기온"
+                          },
+                          "TMX": {
+                            "type": "string",
+                            "example": "일 최고기온"
+                          },
+                          "SNO": {
+                            "type": "string",
+                            "example": "1시간 신적설"
+                          },
+                          "SKY": {
+                            "type": "string",
+                            "example": "하늘상태 코드값"
+                          },
+                          "REH": {
+                            "type": "string",
+                            "example": "습도 %"
+                          },
+                          "VEC": {
+                            "type": "string",
+                            "example": "풍향 deg"
+                          },
+                          "WSD": {
+                            "type": "string",
+                            "example": "풍속 m/s"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
     },
     "/VilageFcst": {
       "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/register": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/login": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/register/callback": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "code",
-            "in": "query",
-            "type": "string"
-          }
+        "tags": [
+          "get"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/login/callback": {
-      "get": {
-        "description": "",
+        "description": "단기 예보",
         "parameters": [
           {
-            "name": "code",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/location": {
-      "get": {
-        "summary": "요청한 지역의 정보를 받아옵니다.",
-        "parameters": [
-          {
-            "name": "area",
-            "in": "query",
+            "name": "",
+            "in": "body",
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "area": {
+                  "type": "string",
+                  "example": "시-구-동 지번 주소"
+                }
+              }
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "지역 정보",
-            "content": {
-              "text/plain": {
-                "schema": "string"
+            "description": "단기 예보",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "UltraSrtNcst": {
+                  "type": "object",
+                  "properties": {
+                    "baseDate": {
+                      "type": "string",
+                      "example": "관측날짜"
+                    },
+                    "baseTime": {
+                      "type": "string",
+                      "example": "관측시간"
+                    },
+                    "Current": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "fcstDate": {
+                            "type": "string",
+                            "example": "예보날짜"
+                          },
+                          "fcstTime": {
+                            "type": "string",
+                            "example": "예보시간"
+                          },
+                          "POP": {
+                            "type": "string",
+                            "example": "강수확률"
+                          },
+                          "PTY": {
+                            "type": "string",
+                            "example": "강수형태코드값"
+                          },
+                          "PCP": {
+                            "type": "string",
+                            "example": "1시간 강수량 mm"
+                          },
+                          "RN1": {
+                            "type": "string",
+                            "example": "1시간 강수량 mm"
+                          },
+                          "T1H": {
+                            "type": "string",
+                            "example": "기온 ℃"
+                          },
+                          "TMP": {
+                            "type": "string",
+                            "example": "1시간 기온"
+                          },
+                          "TMN": {
+                            "type": "string",
+                            "example": "일 최저기온"
+                          },
+                          "TMX": {
+                            "type": "string",
+                            "example": "일 최고기온"
+                          },
+                          "SNO": {
+                            "type": "string",
+                            "example": "1시간 신적설"
+                          },
+                          "SKY": {
+                            "type": "string",
+                            "example": "하늘상태 코드값"
+                          },
+                          "REH": {
+                            "type": "string",
+                            "example": "습도 %"
+                          },
+                          "VEC": {
+                            "type": "string",
+                            "example": "풍향 deg"
+                          },
+                          "WSD": {
+                            "type": "string",
+                            "example": "풍속 m/s"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
               }
             }
           }

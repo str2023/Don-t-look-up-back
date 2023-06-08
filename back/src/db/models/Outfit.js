@@ -1,22 +1,29 @@
 const OutfitModel = require('../schemas/outfit');
 
 const create = async ({ newOutfit }) => {
-  const createdNewOutfit = await OutfitModel.create(newOutfit);
-  return createdNewOutfit;
+  const created = await OutfitModel.create(newOutfit);
+  return created;
 };
 
 const findByUserId = async ({ userId }) => {
-  const outfits = await OutfitModel.find({ userId, item: { $exists: false } });
+  const clothes = await OutfitModel.find({ userId, item: { $exists: false } });
   const items = await OutfitModel.find({ userId, item: { $exists: true } });
-  return { outfits, items };
+  const outfits = { clothes, items };
+  return outfits;
 };
 
 const findByWeather = async ({ weather }) => {
-  const { temp, weatherCondition } = weather;
-  const outfits = await OutfitModel.find({ temp, item: { $exists: false } });
-  const items = await OutfitModel.find({ weatherCondition, item: { $exists: true } });
-  // { $and: [{ temp: { $gte: temp - 2 } }, { temp: { $lte: temp + 2 } }] }
-  return { outfits, items };
+  const { temp, weatherCondition, userId } = weather;
+  if (userId) {
+    const clothes = await OutfitModel.find({ temp, item: { $exists: false }, $or: [{ userId: { $exists: false } }, { userId }] });
+    const items = await OutfitModel.find({ weatherCondition, item: { $exists: true }, $or: [{ userId: { $exists: false } }, { userId }] });
+    const outfits = { clothes, items };
+    return outfits;
+  }
+  const clothes = await OutfitModel.find({ temp, item: { $exists: false }, userId: { $exists: false } });
+  const items = await OutfitModel.find({ weatherCondition, item: { $exists: true }, userId: { $exists: false } });
+  const outfits = { clothes, items };
+  return outfits;
 };
 
 const update = async ({ id, newOutfit }) => {

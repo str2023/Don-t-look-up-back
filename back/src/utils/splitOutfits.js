@@ -20,12 +20,7 @@ const splitOutfits = (unsplitedClothes, unsplitedItems) => {
     item: item.split(','),
   };
 
-  const outfits = {
-    clothes,
-    items,
-  };
-
-  return { outfits };
+  return { clothes, items };
 };
 
 module.exports = splitOutfits;

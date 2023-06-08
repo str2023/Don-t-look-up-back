@@ -16,7 +16,7 @@ const findByAreaNo = async ({ areaNo }) => {
 };
 
 const update = async ({ addressName, newWeather }) => {
-  const weather = await WeatherModel.findOneAndUpdate({ addressName }, newWeather);
+  const weather = await WeatherModel.findOneAndUpdate({ addressName }, newWeather, { new: true });
   return weather;
 };
 

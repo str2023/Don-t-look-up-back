@@ -13,15 +13,15 @@ const findByUserId = async ({ userId }) => {
 };
 
 const findByWeather = async ({ weather }) => {
-  const { temp, weatherCondition, userId } = weather;
+  const { temp, wx, userId } = weather;
   if (userId) {
     const clothes = await OutfitModel.find({ temp, item: { $exists: false }, $or: [{ userId: { $exists: false } }, { userId }] });
-    const items = await OutfitModel.find({ weatherCondition, item: { $exists: true }, $or: [{ userId: { $exists: false } }, { userId }] });
+    const items = await OutfitModel.find({ wx, item: { $exists: true }, $or: [{ userId: { $exists: false } }, { userId }] });
     const outfits = { clothes, items };
     return outfits;
   }
   const clothes = await OutfitModel.find({ temp, item: { $exists: false }, userId: { $exists: false } });
-  const items = await OutfitModel.find({ weatherCondition, item: { $exists: true }, userId: { $exists: false } });
+  const items = await OutfitModel.find({ wx, item: { $exists: true }, userId: { $exists: false } });
   const outfits = { clothes, items };
   return outfits;
 };

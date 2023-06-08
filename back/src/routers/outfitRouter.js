@@ -6,9 +6,9 @@ const loginRequired = require('../middlewares/loginRequired');
 outfitRouter.get(
   '/outfit',
   asyncHandler(async (req, res, next) => {
-    const { weather } = req.body; // weather = { temp:n, weatherCondition:string }
+    const { temp, wx } = req.query;
+    const weather = { temp, wx };
     const outfits = await outfitService.getOutfitByWeather({ weather });
-    // outfits = { clothes, items }
     res.status(200).send(outfits);
   }),
 );
@@ -17,7 +17,8 @@ outfitRouter.get(
   '/outfitLogin',
   loginRequired,
   asyncHandler(async (req, res, next) => {
-    const { weather } = req.body;
+    const { temp, wx } = req.query;
+    const weather = { temp, wx };
     weather.userId = req.currentUserId;
     const outfits = await outfitService.getOutfitByWeather({ weather });
     res.status(200).send(outfits);
@@ -43,6 +44,20 @@ outfitRouter.post(
   '/outfit/custom',
   loginRequired,
   asyncHandler(async (req, res, next) => {
+    /*  #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'User information.',
+                required: true,
+                schema: {
+                      "wx": "날씨상태",
+                      "temp": "기온",
+                      "item": "물건",
+                      "top": "상의",
+                      "bottom": "하의",
+                      "outer": "외투",
+                      "shoes": "신발",
+                      }
+        } */
     const newOutfit = req.body;
     newOutfit.userId = req.currentUserId;
     const outfit = await outfitService.createOutfit({ newOutfit });

@@ -5,7 +5,7 @@ const OutfitSchema = new Schema({
     // 커스텀 옷차림
     type: String,
   },
-  weatherCondition: {
+  wx: {
     type: String,
   },
   temp: {

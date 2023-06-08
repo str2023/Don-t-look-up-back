@@ -14,7 +14,7 @@ const createOutfit = async ({ newOutfit }) => {
 const getOutfitByUserId = async ({ userId }) => {
   const outfits = await Outfit.findByUserId({ userId });
 
-  if (!outfits) {
+  if (outfits.clothes.length === 0 && outfits.items.length === 0) {
     const errorMessage = '등록된 옷차림이 없습니다.';
     return { errorMessage };
   }
@@ -25,7 +25,7 @@ const getOutfitByUserId = async ({ userId }) => {
 const getOutfitByWeather = async ({ weather }) => {
   const outfits = await Outfit.findByWeather({ weather });
 
-  if (!outfits) {
+  if (outfits.clothes.length === 0 && outfits.items.length === 0) {
     const errorMessage = '현재 날씨에 추천할 옷차림이 없습니다.';
     return { errorMessage };
   }
@@ -44,8 +44,8 @@ const setOutfit = async ({ id, newOutfit }) => {
   return updated;
 };
 
-const deleteOutfit = async ({ id }) => {
-  const removed = await Outfit.deleteById({ id });
+const deleteOutfit = async ({ id, userId }) => {
+  const removed = await Outfit.deleteById({ id, userId });
 
   if (!removed) {
     const errorMessage = '삭제에 실패했습니다.';

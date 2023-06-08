@@ -24,6 +24,331 @@
     "application/json"
   ],
   "paths": {
+    "/outfit": {
+      "get": {
+        "tags": [
+          "옷차림"
+        ],
+        "description": "기본 옷차림 추천",
+        "parameters": [
+          {
+            "name": "",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "weather": {
+                  "type": "object",
+                  "properties": {
+                    "temp": {
+                      "type": "string",
+                      "example": "기온"
+                    },
+                    "weatherCondition": {
+                      "type": "string",
+                      "example": "맑음"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "옷차림",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "outfits": {
+                  "type": "object",
+                  "properties": {
+                    "clothes": {
+                      "type": "object",
+                      "properties": {
+                        "temp": {
+                          "type": "string",
+                          "example": "기온"
+                        },
+                        "top": {
+                          "type": "string",
+                          "example": "상의"
+                        },
+                        "bottom": {
+                          "type": "string",
+                          "example": "하의"
+                        },
+                        "outer": {
+                          "type": "string",
+                          "example": "외투"
+                        },
+                        "shoes": {
+                          "type": "string",
+                          "example": "신발"
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "weatherCondition": {
+                          "type": "string",
+                          "example": "맑음"
+                        },
+                        "item": {
+                          "type": "string",
+                          "example": "물건"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/outfitLogin": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/outfit/custom": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "newOutfit": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/user/register": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "nickName": {
+                  "example": "any"
+                },
+                "birthDate": {
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/current": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/UVIdx": {
       "get": {
         "tags": [
@@ -241,7 +566,7 @@
                       "type": "string",
                       "example": "관측시간"
                     },
-                    "Current": {
+                    "forecast": {
                       "type": "array",
                       "items": {
                         "type": "object",
@@ -323,7 +648,7 @@
     "/VilageFcst": {
       "get": {
         "tags": [
-          "get"
+          "날씨"
         ],
         "description": "단기 예보",
         "parameters": [
@@ -358,7 +683,7 @@
                       "type": "string",
                       "example": "관측시간"
                     },
-                    "Current": {
+                    "forecast": {
                       "type": "array",
                       "items": {
                         "type": "object",

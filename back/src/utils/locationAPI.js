@@ -3,7 +3,7 @@ const axios = require('axios');
 
 // 카카오 로컬 API로 location 데이터 받아오기: area는 반드시 '시-구-동' 지번 주소로만
 const getAddress = async ({ area }) => {
-  const finalUrl = `https://dapi.kakao.com/v2/local/search/address.json?query="${area}"`;
+  const finalUrl = 'https://dapi.kakao.com/v2/local/search/address.json';
 
   let info;
 
@@ -15,6 +15,9 @@ const getAddress = async ({ area }) => {
         Authorization: `KakaoAK ${process.env.CLIENT_ID}`,
         'Content-type': 'application/json;charset=UTF-8',
       },
+      params: {
+        query: area,
+      },
     });
   } catch (error) {
     console.log(error.message);
@@ -25,6 +28,4 @@ const getAddress = async ({ area }) => {
   return finalInfo;
 };
 
-module.exports = {
-  getAddress,
-};
+module.exports = { getAddress };

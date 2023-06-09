@@ -14,7 +14,7 @@ weatherRouter.get(
     res.status(200).send(UVIdx);
   }),
 );
-
+// 초단기 실황. 현재 날씨 조회
 weatherRouter.get(
   '/UltraSrtNcst',
   getArea,
@@ -24,7 +24,7 @@ weatherRouter.get(
     res.status(200).send(UltraSrtNcst);
   }),
 );
-
+// 초단기 예보. 내일모레글피까지의 날씨 예보
 weatherRouter.get(
   '/UltraSrtFcst',
   getArea,
@@ -34,7 +34,7 @@ weatherRouter.get(
     res.status(200).send(UltraSrtFcst);
   }),
 );
-
+// 단기 예보.
 weatherRouter.get(
   '/VilageFcst',
   getArea,
@@ -44,5 +44,14 @@ weatherRouter.get(
     res.status(200).send(VilageFcst);
   }),
 );
-
+// 기상정보문
+weatherRouter.get(
+  '/WthrInfo',
+  getArea,
+  asyncHandler(async (req, res, next) => {
+    const { Area } = req.AreaInfo;
+    const WthrInfo = await weatherService.getWeatherInfo({ Area });
+    res.status(200).send(WthrInfo);
+  }),
+);
 module.exports = weatherRouter;

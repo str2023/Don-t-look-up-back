@@ -1,6 +1,7 @@
-const api = require('../utils/api');
+const weatherAPI = require('../utils/weatherAPI');
 const { Weather } = require('../db');
 const { getTime } = require('../utils/getTime');
+const getAwsNo = require('../utils/getAwsNo');
 
 // 자외선 지수
 const getUVIdx = async ({ Area }) => {
@@ -18,7 +19,7 @@ const getUVIdx = async ({ Area }) => {
     console.error('DB에 자외선지수 없음');
   }
   // 없다면 기상청 API 통신
-  const res = await api.getUVIdx(areaNo, time);
+  const res = await weatherAPI.getUVIdx(areaNo, time);
   // 데이터 정제
   const { date, h0, h3, h6, h9, h12 } = res.data.response.body.items.item[0];
   [date, h0, h3, h6].forEach((value) => parseInt(value, 10));
@@ -41,6 +42,7 @@ const getUltraSrtNcst = async ({ Area }) => {
   const addressName = Area.Name;
 
   const time = getTime();
+
   const date = time.YMD;
   const hour = time.HH;
   // DB에 있는지 날씨 조회
@@ -54,7 +56,7 @@ const getUltraSrtNcst = async ({ Area }) => {
   }
   // 없다면 기상청 API 통신
   const url = '/getUltraSrtNcst';
-  const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const res = await weatherAPI.getWeather(url, date, hour, nx, ny);
   const data = res.data.response.body.items.item;
   // 데이터 정제
   const UltraSrtNcst = {
@@ -96,7 +98,7 @@ const getUltraSrtFcst = async ({ Area }) => {
   }
   // 없다면 기상청 API 통신
   const url = '/getUltraSrtFcst';
-  const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const res = await weatherAPI.getWeather(url, date, hour, nx, ny);
   const data = res.data.response.body.items.item;
   // 데이터 정제
   const UltraSrtFcst = {
@@ -151,7 +153,7 @@ const getVilageFcst = async ({ Area }) => {
   }
   // 없다면 기상청 API 통신
   const url = '/getVilageFcst';
-  const res = await api.getVilageFcst(url, date, hour, nx, ny);
+  const res = await weatherAPI.getWeather(url, date, hour, nx, ny);
   const data = res.data.response.body.items.item;
   // 데이터 정제
   const VilageFcst = {
@@ -182,5 +184,37 @@ const getVilageFcst = async ({ Area }) => {
   }
   return VilageFcst;
 };
+// 기상 정보문
+const getWeatherInfo = async ({ Area }) => {
+  const url = '/getWthrInfo';
+  const { YMD, YMDH } = getTime();
+  const addressName = Area.Name;
+  const stnId = getAwsNo(Area.si);
 
-module.exports = { getUVIdx, getUltraSrtNcst, getUltraSrtFcst, getVilageFcst };
+  // DB에 있는지 날씨 조회
+  const weather = await Weather.findByAddressName({ addressName });
+  try {
+    if (weather.WthrInfo.callTime >= YMDH - 6) {
+      return weather.WthrInfo;
+    }
+  } catch (err) {
+    console.error('DB에 기상정보문 없음');
+  }
+
+  const WthrInfo = { callTime: YMDH };
+  const res = await weatherAPI.getWeatherInfo(url, YMD, stnId);
+  WthrInfo.t1 = res.data.response.body.items.item[0].t1;
+  WthrInfo.tmFc = res.data.response.body.items.item[0].tmFc;
+
+  if (weather) {
+    const newWeather = { WthrInfo };
+    await Weather.update({ addressName, newWeather });
+  } else {
+    const newWeather = { addressName, WthrInfo };
+    await Weather.create({ newWeather });
+  }
+
+  return WthrInfo;
+};
+
+module.exports = { getUVIdx, getUltraSrtNcst, getUltraSrtFcst, getVilageFcst, getWeatherInfo };

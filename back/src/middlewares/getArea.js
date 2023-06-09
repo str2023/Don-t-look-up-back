@@ -10,11 +10,11 @@ const getArea = async (req, res, next) => {
     No: areaInfo.locationNo,
     x: areaInfo.x,
     y: areaInfo.y,
+    si: areaInfo.si,
   };
 
   req.AreaInfo = { Area };
   next();
-  console.log(Area);
 };
 
 module.exports = getArea;

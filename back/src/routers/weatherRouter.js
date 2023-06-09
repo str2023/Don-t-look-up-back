@@ -4,7 +4,7 @@ const weatherService = require('../services/weatherService');
 const asyncHandler = require('../utils/asyncHandler');
 const getArea = require('../middlewares/getArea');
 
-// 자외선 지수 라우터. params에 위도, 경도 값이 들어온다.
+// 자외선 지수 라우터. params에 주솟값이 들어온다.
 weatherRouter.get(
   '/UVIdx',
   getArea,

@@ -8,8 +8,8 @@ const create = async ({ newOutfit }) => {
 const findByUserId = async ({ userId }) => {
   const clothes = await OutfitModel.find({ userId, item: { $exists: false } });
   const items = await OutfitModel.find({ userId, item: { $exists: true } });
-  const outfits = { clothes, items };
-  return outfits;
+
+  return { clothes, items };
 };
 
 const findByWeather = async ({ weather }) => {

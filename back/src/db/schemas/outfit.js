@@ -12,19 +12,19 @@ const OutfitSchema = new Schema({
     type: Number,
   },
   item: {
-    type: String,
+    type: [String],
   },
   top: {
-    type: String,
+    type: [String],
   },
   bottom: {
-    type: String,
+    type: [String],
   },
   outer: {
-    type: String,
+    type: [String],
   },
   shoes: {
-    type: String,
+    type: [String],
   },
 });
 

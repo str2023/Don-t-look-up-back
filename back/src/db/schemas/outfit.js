@@ -1,33 +1,32 @@
 const { Schema, model } = require('mongoose');
 
-const ClothesSchema = new Schema({
+const OutfitSchema = new Schema({
   userId: {
     // 커스텀 옷차림
     type: String,
   },
-  weatherCondition: {
+  wx: {
     type: String,
   },
   temp: {
     type: Number,
   },
   item: {
-    type: String,
+    type: [String],
   },
   top: {
-    type: String,
+    type: [String],
   },
   bottom: {
-    type: String,
+    type: [String],
   },
   outer: {
-    type: String,
+    type: [String],
   },
-  shoe: {
-    type: String,
+  shoes: {
+    type: [String],
   },
 });
 
-const ClothesModel = model('Clothes', ClothesSchema);
-const ItemsModel = model('Items', ItemSchema);
-module.exports = { ClothesModel, ItemsModel };
+const OutfitModel = model('Outfit', OutfitSchema);
+module.exports = OutfitModel;

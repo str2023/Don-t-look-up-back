@@ -1,26 +1,39 @@
 const OutfitModel = require('../schemas/outfit');
 
-const createOutfit = async ({ newOutfit }) => {
-  const createdNewOutfit = await OutfitModel.create(newOutfit);
-  return createdNewOutfit;
+const create = async ({ newOutfit }) => {
+  const created = await OutfitModel.create(newOutfit);
+  return created;
 };
 
 const findByUserId = async ({ userId }) => {
-  const outfits = await OutfitModel.find({ userId });
-  return outfits;
+  const clothes = await OutfitModel.find({ userId, item: { $exists: false } });
+  const items = await OutfitModel.find({ userId, item: { $exists: true } });
+
+  return { clothes, items };
 };
 
 const findByWeather = async ({ weather }) => {
-  const { temp, weatherCondition } = weather;
-  const outfits = await OutfitModel.find({ temp });
-  const items = await OutfitModel.find({ weatherCondition });
-  // { $and: [{ temp: { $gte: temp - 2 } }, { temp: { $lte: temp + 2 } }] }
-  return { outfits, items };
+  const { temp, wx, userId } = weather;
+  if (userId) {
+    const clothes = await OutfitModel.find({ temp, item: { $exists: false }, $or: [{ userId: { $exists: false } }, { userId }] });
+    const items = await OutfitModel.find({ wx, item: { $exists: true }, $or: [{ userId: { $exists: false } }, { userId }] });
+    const outfits = { clothes, items };
+    return outfits;
+  }
+  const clothes = await OutfitModel.find({ temp, item: { $exists: false }, userId: { $exists: false } });
+  const items = await OutfitModel.find({ wx, item: { $exists: true }, userId: { $exists: false } });
+  const outfits = { clothes, items };
+  return outfits;
 };
 
-const deleteById = async ({ id }) => {
+const update = async ({ id, newOutfit }) => {
+  const updated = await OutfitModel.findOneAndUpdate({ _id: id }, newOutfit, { new: true });
+  return updated;
+};
+
+const deleteById = async ({ id, userId }) => {
   const removed = await OutfitModel.findOneAndDelete({ _id: id });
   return removed;
 };
 
-module.exports = { createOutfit, findByUserId, findByWeather, deleteById };
+module.exports = { create, findByUserId, findByWeather, deleteById, update };

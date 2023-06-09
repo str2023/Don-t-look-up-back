@@ -1,4 +1,4 @@
-const swaggerAutogen = require('swagger-autogen')();
+const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.3' });
 
 const doc = {
   info: {
@@ -18,13 +18,28 @@ const doc = {
       description: '', // Tag description
     },
     // { ... }
+  ], // by default: empty object
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        in: 'header',
+        name: 'Authorization',
+        description: 'Bearer token to access these api endpoints',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+  security: [
+    {
+      bearerAuth: [],
+    },
   ],
-  securityDefinitions: {}, // by default: empty object
-  definitions: {}, // by default: empty object (Swagger 2.0)
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./src/routers/userRouter.js', './src/routers/weatherRouter.js', './src/routers/kakaoRouter.js'];
+const endpointsFiles = ['./src/routers/outfitRouter.js', './app.js', './src/routers/userRouter.js', './src/routers/weatherRouter.js'];
 
 /* NOTE: if you use the express Router, you must pass in the 
    'endpointsFiles' only the root file where the route starts,

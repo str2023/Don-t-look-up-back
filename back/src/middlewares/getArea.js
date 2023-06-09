@@ -1,7 +1,7 @@
 const locationService = require('../services/locationService');
 
 const getArea = async (req, res, next) => {
-  const { area } = req.body;
+  const { area } = req.query;
 
   const areaInfo = await locationService.getAddressInfo({ area });
 

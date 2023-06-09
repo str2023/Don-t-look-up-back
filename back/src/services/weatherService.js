@@ -168,7 +168,7 @@ const getVilageFcst = async ({ Area }) => {
       temp = fcstDate + fcstTime;
     }
     VilageFcst.forecast.at(-1).fcstDate = parseInt(fcstDate, 10);
-    VilageFcst.forecast.at(-1).fcstTime = parseInt(fcstTime, 10);
+    VilageFcst.forecast.at(-1).fcstTime = parseInt(fcstTime, 10) / 100;
     if (fcstValue === '강수없음' || fcstValue === '적설없음') fcstValue = 0;
     VilageFcst.forecast.at(-1)[category] = parseInt(fcstValue, 10);
   });
@@ -180,7 +180,7 @@ const getVilageFcst = async ({ Area }) => {
     const newWeather = { addressName, VilageFcst };
     await Weather.create({ newWeather });
   }
-  return res.data.response.body.items.item;
+  return VilageFcst;
 };
 
 module.exports = { getUVIdx, getUltraSrtNcst, getUltraSrtFcst, getVilageFcst };

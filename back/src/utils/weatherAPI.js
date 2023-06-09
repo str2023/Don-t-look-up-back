@@ -16,7 +16,7 @@ const getUVIdx = async (areaNo, time) => {
   });
 };
 
-const getVilageFcst = async (url, date, hour, nx, ny) =>
+const getWeather = async (url, date, hour, nx, ny) =>
   axios.get(url, {
     baseURL: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0',
     params: {
@@ -31,4 +31,18 @@ const getVilageFcst = async (url, date, hour, nx, ny) =>
     },
   });
 
-module.exports = { getUVIdx, getVilageFcst };
+const getWeatherInfo = async (url, YMD, stnId = 108) =>
+  axios.get(url, {
+    baseURL: 'http://apis.data.go.kr/1360000/WthrWrnInfoService',
+    params: {
+      serviceKey: process.env.WEATHER_DKEY,
+      pageNo: 1,
+      numOfRows: 1,
+      dataType: 'JSON',
+      stnId,
+      fromTmFc: YMD - 6,
+      toTmFc: YMD,
+    },
+  });
+
+module.exports = { getUVIdx, getWeather, getWeatherInfo };

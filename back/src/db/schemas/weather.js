@@ -54,6 +54,11 @@ const WeatherSchema = new Schema(
       h9: Number,
       h12: Number,
     },
+    WthrInfo: {
+      callTime: Number,
+      tmFc: Number,
+      t1: String,
+    },
   },
   {
     timestamps: true,

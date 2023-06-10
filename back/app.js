@@ -11,6 +11,7 @@ const weatherRouter = require('./src/routers/weatherRouter');
 const outfitRouter = require('./src/routers/outfitRouter');
 const kakaoRouter = require('./src/routers/kakaoRouter');
 const locationRouter = require('./src/routers/locationRouter');
+const activityRouter = require('./src/routers/activityRouter');
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.send('돈룩업 백엔드 API');
 });
-app.use([usersRouter, weatherRouter, outfitRouter]);
+app.use([usersRouter, weatherRouter, outfitRouter, activityRouter]);
 app.use('/oauth', kakaoRouter);
 app.use('/location', locationRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));

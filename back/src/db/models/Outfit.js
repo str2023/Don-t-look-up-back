@@ -32,7 +32,7 @@ const update = async ({ id, newOutfit }) => {
 };
 
 const deleteById = async ({ id, userId }) => {
-  const removed = await OutfitModel.findOneAndDelete({ _id: id });
+  const removed = await OutfitModel.findOneAndDelete({ _id: id, userId });
   return removed;
 };
 

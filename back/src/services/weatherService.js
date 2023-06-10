@@ -22,7 +22,6 @@ const getUVIdx = async ({ Area }) => {
   const res = await weatherAPI.getUVIdx(areaNo, time);
   // 데이터 정제
   const { date, h0, h3, h6, h9, h12 } = res.data.response.body.items.item[0];
-  [date, h0, h3, h6].forEach((value) => parseInt(value, 10));
   const UVIdx = { date, h0, h3, h6, h9, h12 };
   // DB에 삽입갱신
   if (weather) {

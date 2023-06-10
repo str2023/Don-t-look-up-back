@@ -15,6 +15,7 @@
       { "functions": false, "classes": true, "variables": true }
     ],
     "no-console": "off", //console.log warning 제거
-    "no-unused-vars": ["error", { "args": "none" }] //사용되지 않는 매개변수 에러 제거
+    "no-unused-vars": ["error", { "args": "none" }], //사용되지 않는 매개변수 에러 제거
+    "no-underscore-dangle": ["error", { "allow": "_id" }]
   }
 }

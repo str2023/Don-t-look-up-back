@@ -308,7 +308,15 @@
     "/location/": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

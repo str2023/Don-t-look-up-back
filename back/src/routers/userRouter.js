@@ -65,6 +65,17 @@ userRouter.get(
   }),
 );
 
+userRouter.get(
+  '/user/favorite',
+  loginRequired,
+  asyncHandler(async (req, res, next) => {
+    const userId = req.currentUserId;
+
+    const favorite = await userService.getFavorite({ userId });
+    res.status(200).send(favorite);
+  }),
+);
+
 userRouter.post(
   '/user/favorite',
   loginRequired,

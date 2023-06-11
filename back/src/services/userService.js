@@ -110,6 +110,11 @@ const getUserInfo = async ({ userId }) => {
   return user;
 };
 
+const getFavorite = async ({ userId }) => {
+  const favorite = await User.findById({ userId });
+  return favorite.favorite;
+};
+
 const addFavorite = async ({ userId, area }) => {
   const favorite = await User.addFavorite({ userId, area });
   return favorite;
@@ -137,6 +142,7 @@ module.exports = {
   getUsers,
   setUser,
   getUserInfo,
+  getFavorite,
   addFavorite,
   subFavorite,
   removeUser,

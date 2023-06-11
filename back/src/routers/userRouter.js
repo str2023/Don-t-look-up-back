@@ -7,9 +7,7 @@ userRouter.post(
   '/user/register',
   asyncHandler(async (req, res, next) => {
     if (Object.keys(req.body).length === 0) {
-      throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요',
-      );
+      throw new Error('headers의 Content-Type을 application/json으로 설정해주세요');
     }
 
     // req (request) 에서 데이터 가져오기
@@ -64,6 +62,30 @@ userRouter.get(
     }
 
     res.status(200).send(currentUserInfo);
+  }),
+);
+
+userRouter.post(
+  '/user/favorite',
+  loginRequired,
+  asyncHandler(async (req, res, next) => {
+    const userId = req.currentUserId;
+    const { area } = req.body;
+
+    const favorite = await userService.addFavorite({ area, userId });
+    res.status(201).send(favorite);
+  }),
+);
+
+userRouter.delete(
+  '/user/favorite',
+  loginRequired,
+  asyncHandler(async (req, res, next) => {
+    const userId = req.currentUserId;
+    const { area } = req.body;
+
+    const favorite = await userService.subFavorite({ area, userId });
+    res.status(200).send(favorite);
   }),
 );
 

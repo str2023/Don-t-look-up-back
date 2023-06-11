@@ -97,6 +97,7 @@ const setUser = async ({ userId, toUpdate }) => {
 
   return user;
 };
+
 const getUserInfo = async ({ userId }) => {
   const user = await User.findById({ userId });
 
@@ -107,6 +108,16 @@ const getUserInfo = async ({ userId }) => {
   }
 
   return user;
+};
+
+const addFavorite = async ({ userId, area }) => {
+  const favorite = await User.addFavorite({ userId, area });
+  return favorite;
+};
+
+const subFavorite = async ({ userId, area }) => {
+  const favorite = await User.subFavorite({ userId, area });
+  return favorite;
 };
 
 const removeUser = async ({ userId }) => {
@@ -126,5 +137,7 @@ module.exports = {
   getUsers,
   setUser,
   getUserInfo,
+  addFavorite,
+  subFavorite,
   removeUser,
 };

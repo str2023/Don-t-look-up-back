@@ -6,14 +6,19 @@ const create = async ({ newActivity }) => {
 };
 
 const findAllByAddressName = async ({ temp, wx, area }) => {
-  const activities = await ActivityModel.findOne({
+  const allActivities = await ActivityModel.findOne({
     temp: { $in: temp },
     wx,
-    // activity: {
-    //   $elemMatch: { location: { $elemMatch: { addressName: area } } },
-    // },
   }).select('activity');
-  return activities;
+
+  const activitiesInArea = await ActivityModel.findOne({
+    temp: { $in: temp },
+    wx,
+    activity: {
+      $elemMatch: { location: { $elemMatch: { addressName: area } } },
+    },
+  }).select('activity');
+  return { allActivities, activitiesInArea };
 };
 
 const findLocationByActivity = async ({ activity }) => {

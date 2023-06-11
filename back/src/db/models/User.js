@@ -38,7 +38,7 @@ const addFavorite = async ({ userId, area }) => {
       },
     },
     { new: true },
-  ).favorite;
+  ).select('favorite');
   return favorite;
 };
 
@@ -51,7 +51,7 @@ const subFavorite = async ({ userId, area }) => {
       },
     },
     { new: true },
-  ).favorite;
+  ).select('favorite');
   return favorite;
 };
 

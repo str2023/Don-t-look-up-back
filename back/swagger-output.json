@@ -13,22 +13,14 @@
       "description": ""
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "securityDefinitions": {},
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/outfit": {
       "get": {
-        "tags": [
-          "옷차림"
-        ],
+        "tags": ["옷차림"],
         "description": "기본 옷차림 추천",
         "parameters": [
           {
@@ -427,9 +419,7 @@
     },
     "/uvidx": {
       "get": {
-        "tags": [
-          "날씨"
-        ],
+        "tags": ["날씨"],
         "description": "자외선 지수",
         "parameters": [
           {
@@ -492,9 +482,7 @@
     },
     "/ultraSrtNcst": {
       "get": {
-        "tags": [
-          "날씨"
-        ],
+        "tags": ["날씨"],
         "description": "초단기 실황",
         "parameters": [
           {
@@ -606,9 +594,7 @@
     },
     "/ultraSrtFcst": {
       "get": {
-        "tags": [
-          "날씨"
-        ],
+        "tags": ["날씨"],
         "description": "초단기 예보",
         "parameters": [
           {
@@ -723,9 +709,7 @@
     },
     "/vilageFcst": {
       "get": {
-        "tags": [
-          "날씨"
-        ],
+        "tags": ["날씨"],
         "description": "단기 예보",
         "parameters": [
           {
@@ -752,95 +736,93 @@
     "/WthrInfo": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+        "parameters": {
+          "name": "area",
+          "in": "query",
+          "schema": {
+            "type": "string"
           }
         }
       }
-    },
-    "/activity": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "temp",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "wx",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
+    }
+  },
+  "/activity": {
+    "get": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "temp",
+          "in": "query",
+          "schema": {
+            "type": "string"
           }
         },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "temp": {
-                    "example": "any"
-                  },
-                  "wx": {
-                    "example": "any"
-                  },
-                  "area": {
-                    "example": "any"
-                  },
-                  "activity": {
-                    "example": "any"
-                  }
+        {
+          "name": "wx",
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "area",
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    },
+    "post": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      },
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "temp": {
+                  "example": "any"
+                },
+                "wx": {
+                  "example": "any"
+                },
+                "area": {
+                  "example": "any"
+                },
+                "activity": {
+                  "example": "any"
                 }
               }
             }

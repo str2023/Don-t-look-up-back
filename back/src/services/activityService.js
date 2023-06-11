@@ -3,7 +3,7 @@ const { Activity } = require('../db');
 const createActivity = async ({ temp, wx, area, activity, userId }) => {
   // 새 액티비티 객체 생성
   const newActivity = {
-    temp,
+    temp: [temp],
     wx,
     activity: [
       {
@@ -58,15 +58,23 @@ const getActivity = async ({ temp, wx, area }) => {
   }
 
   const convertObj = {};
+  const tryActivities = [];
   data.activity.forEach((obj) => {
-    convertObj[obj.name] = obj.location.find((e) => e.addressName === area).count;
+    const location = obj.location.find((e) => e.addressName === area);
+    if (location) {
+      convertObj[obj.name] = location.count;
+    } else {
+      tryActivities.push(obj.name);
+    }
   });
 
-  const activities = Object.entries(convertObj)
-    .sort(([, a], [, b]) => b - a) // count(추천수) 기준 내림차 정렬
-    .map((e) => e[0]); // activity로만 배열 생성
-
-  return activities;
+  let activities = [];
+  if (convertObj.lenth !== 0) {
+    activities = Object.entries(convertObj)
+      .sort(([, a], [, b]) => b - a) // count(추천수) 기준 내림차 정렬
+      .map((e) => e[0]); // activity로만 배열 생성
+  }
+  return { activities, tryActivities };
 };
 
 module.exports = { createActivity, getActivity };

@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const ActivitySchema = new Schema({
   temp: {
-    type: Number,
+    type: [Number],
     required: true,
   },
   wx: {

@@ -7,11 +7,11 @@ const create = async ({ newActivity }) => {
 
 const findAllByAddressName = async ({ temp, wx, area }) => {
   const activities = await ActivityModel.findOne({
-    temp,
+    temp: { $in: temp },
     wx,
-    activity: {
-      $elemMatch: { location: { $elemMatch: { addressName: area } } },
-    },
+    // activity: {
+    //   $elemMatch: { location: { $elemMatch: { addressName: area } } },
+    // },
   }).select('activity');
   return activities;
 };

@@ -7,14 +7,14 @@ activityRouter.get(
   '/activity',
   asyncHandler(async (req, res, next) => {
     const { temp, wx, area } = req.query;
-    const activities = await activityService.getActivity({ temp, wx, area });
+    const { activities, tryActivities, errorMessage } = await activityService.getActivity({ temp, wx, area });
 
-    if (activities.errorMessage) {
-      res.status(404).send(activities.errorMessage);
+    if (errorMessage) {
+      res.status(404).send(errorMessage);
       return;
     }
 
-    res.status(200).send(activities);
+    res.status(200).send({ activities, tryActivities });
   }),
 );
 

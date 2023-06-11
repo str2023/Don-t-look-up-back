@@ -50,22 +50,24 @@ const createActivity = async ({ temp, wx, area, activity, userId }) => {
 };
 
 const getActivity = async ({ temp, wx, area }) => {
-  const data = await Activity.findAllByAddressName({ temp, wx, area });
+  const { allActivities, activitiesInArea } = await Activity.findAllByAddressName({ temp, wx, area });
 
-  if (!data) {
+  if (!allActivities) {
     const errorMessage = '액티비티가 없습니다.';
     return { errorMessage };
   }
 
   const convertObj = {};
   const tryActivities = [];
-  data.activity.forEach((obj) => {
-    const location = obj.location.find((e) => e.addressName === area);
-    if (location) {
-      convertObj[obj.name] = location.count;
-    } else {
-      tryActivities.push(obj.name);
-    }
+  // 동네의 액티비티
+  if (activitiesInArea) {
+    activitiesInArea.activity.forEach((obj) => {
+      convertObj[obj.name] = obj.location.find((e) => e.addressName === area).count;
+    });
+  }
+  // 전체 액티비티
+  allActivities.activity.forEach((obj) => {
+    tryActivities.push(obj.name);
   });
 
   let activities = [];

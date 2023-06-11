@@ -6,7 +6,7 @@ const getArea = require('../middlewares/getArea');
 
 // 자외선 지수 라우터. params에 주솟값이 들어온다.
 weatherRouter.get(
-  '/UVIdx',
+  '/uvidx',
   getArea,
   asyncHandler(async (req, res, next) => {
     const { Area } = req.AreaInfo;
@@ -16,7 +16,7 @@ weatherRouter.get(
 );
 // 초단기 실황. 현재 날씨 조회
 weatherRouter.get(
-  '/UltraSrtNcst',
+  '/ultraSrtNcst',
   getArea,
   asyncHandler(async (req, res, next) => {
     const { Area } = req.AreaInfo;
@@ -26,7 +26,7 @@ weatherRouter.get(
 );
 // 초단기 예보. 내일모레글피까지의 날씨 예보
 weatherRouter.get(
-  '/UltraSrtFcst',
+  '/ultraSrtFcst',
   getArea,
   asyncHandler(async (req, res, next) => {
     const { Area } = req.AreaInfo;
@@ -36,7 +36,7 @@ weatherRouter.get(
 );
 // 단기 예보.
 weatherRouter.get(
-  '/VilageFcst',
+  '/vilageFcst',
   getArea,
   asyncHandler(async (req, res, next) => {
     const { Area } = req.AreaInfo;
@@ -46,7 +46,7 @@ weatherRouter.get(
 );
 // 기상정보문
 weatherRouter.get(
-  '/WthrInfo',
+  '/wthrInfo',
   getArea,
   asyncHandler(async (req, res, next) => {
     const { Area } = req.AreaInfo;

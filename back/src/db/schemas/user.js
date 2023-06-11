@@ -30,6 +30,9 @@ const UserSchema = new Schema(
     location: {
       type: String,
     },
+    favorite: {
+      type: [String],
+    },
   },
   {
     timestamps: true,

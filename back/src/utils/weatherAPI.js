@@ -35,7 +35,7 @@ const getWeatherInfo = async (url, YMD, stnId = 108) =>
   axios.get(url, {
     baseURL: 'http://apis.data.go.kr/1360000/WthrWrnInfoService',
     params: {
-      serviceKey: process.env.WEATHER_KEY,
+      serviceKey: process.env.WEATHER_DKEY,
       pageNo: 1,
       numOfRows: 1,
       dataType: 'JSON',

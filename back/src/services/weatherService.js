@@ -12,7 +12,7 @@ const getUVIdx = async ({ Area }) => {
   // DB에 있는지 날씨 조회
   const weather = await Weather.findByAddressName({ addressName });
   try {
-    if (weather.UVIdx.date - time < 3) {
+    if (time - weather.UVIdx.date < 3) {
       return weather.UVIdx;
     }
   } catch (err) {

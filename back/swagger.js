@@ -45,6 +45,8 @@ const endpointsFiles = [
   './src/routers/userRouter.js',
   './src/routers/weatherRouter.js',
   './src/routers/activityRouter.js',
+  './src/routers/locationRouter.js',
+  './src/routers/methodRouter.js',
 ];
 
 /* NOTE: if you use the express Router, you must pass in the 

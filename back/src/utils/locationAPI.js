@@ -29,4 +29,30 @@ const getAddress = async ({ area }) => {
   return finalInfo;
 };
 
-module.exports = { getAddress };
+const getAddressByWGS = async ({ lat, lon }) => {
+  const finalUrl = 'https://dapi.kakao.com/v2/local/geo/coord2address.json';
+
+  let info;
+
+  try {
+    info = await axios({
+      method: 'GET',
+      url: finalUrl,
+      headers: {
+        Authorization: `KakaoAK ${process.env.CLIENT_ID}`,
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+      params: {
+        x: lon,
+        y: lat,
+        input_coord: 'WGS84',
+      },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+  const finalInfo = getAddress({ area: info.data.documents[0].address.address_name });
+
+  return finalInfo;
+};
+module.exports = { getAddress, getAddressByWGS };

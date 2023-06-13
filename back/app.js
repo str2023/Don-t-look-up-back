@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
 });
 app.use([usersRouter, weatherRouter, locationRouter, outfitRouter, activityRouter, methodRouter]);
 app.use('/oauth', kakaoRouter);
-// app.use('/location', locationRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 module.exports = app;

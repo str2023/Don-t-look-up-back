@@ -22,7 +22,6 @@ const getKakaoLoginURL = () => {
   const config = {
     client_id: process.env.CLIENT_ID,
     redirect_uri: process.env.REDIRECT_LOGIN_URI,
-    response_type: 'code',
   };
 
   const finalUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${config.client_id}&redirect_uri=${config.redirect_uri}&response_type=code`;
@@ -104,7 +103,6 @@ const getKakaoUserInfo = async ({ accessToken }) => {
   console.log(kakaoUser.data); // 가져온 정보값 콘솔창에서 확인
 
   const kakaoUserInfo = JSON.parse(JSON.stringify(kakaoUser.data)); // 가져온 값의 연결을 끊고 문자열 json파일로 만들기
-
   return kakaoUserInfo;
 };
 

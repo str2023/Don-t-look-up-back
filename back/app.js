@@ -13,6 +13,7 @@ const outfitRouter = require('./src/routers/outfitRouter');
 const kakaoRouter = require('./src/routers/kakaoRouter');
 const locationRouter = require('./src/routers/locationRouter');
 const activityRouter = require('./src/routers/activityRouter');
+const errorMiddleware = require('./src/middlewares/errorMiddleware');
 
 const app = express();
 
@@ -30,5 +31,7 @@ app.get('/', (req, res) => {
 app.use([usersRouter, weatherRouter, locationRouter, outfitRouter, activityRouter, methodRouter]);
 app.use('/oauth', kakaoRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use(errorMiddleware);
 
 module.exports = app;

@@ -40,7 +40,7 @@ const getWeatherInfo = async (url, YMD, stnId = 108) =>
       numOfRows: 1,
       dataType: 'JSON',
       stnId,
-      fromTmFc: YMD - 6,
+      fromTmFc: YMD - 5,
       toTmFc: YMD,
     },
   });

@@ -112,7 +112,7 @@ const getUltraSrtFcst = async ({ Area }) => {
     let { fcstValue, fcstTime } = obj;
     fcstTime = parseInt(fcstTime, 10);
     if (fcstTime < firstFcstTime) fcstTime += 2400;
-    const idx = (fcstTime % firstFcstTime) / 100;
+    const idx = Number.isNaN((fcstTime % firstFcstTime) / 100) ? 0 : (fcstTime % firstFcstTime) / 100;
     if (firstCategory === category) {
       UltraSrtFcst.forecast.push({});
     }

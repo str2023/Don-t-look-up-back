@@ -27,7 +27,7 @@ activityRouter.post(
 
     const activities = await activityService.createActivity({ temp, wx, area, activity, userId });
 
-    if (activities.errorMessage) {
+    if (activities?.errorMessage) {
       res.status(404).send(activities.errorMessage);
       return;
     }

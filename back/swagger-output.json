@@ -729,6 +729,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -736,11 +739,21 @@
     "/WthrInfo": {
       "get": {
         "description": "",
-        "parameters": {
-          "name": "area",
-          "in": "query",
-          "schema": {
-            "type": "string"
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -826,6 +839,61 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/location": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/weatherMthd": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }

@@ -21,13 +21,12 @@ const createActivity = async ({ temp, wx, area, activity, userId }) => {
   // DB에 액티비티.날씨가 존재하는지 확인
   const updateActivity = newActivity.activity[0];
   const isExist = await Activity.findAllByAddressName({ temp, wx, area });
-  if (isExist) {
-    let { _id } = isExist;
-    const a = isExist.activity.find((e) => e.name === activity);
+  if (isExist.activitiesInArea) {
+    const { _id } = isExist.activitiesInArea;
+    const a = isExist.activitiesInArea?.activity.find((e) => e.name === activity);
 
     // 액티비티가 없다면 추가
     if (!a) {
-      console.log(updateActivity);
       const addedActivity = await Activity.addActivity({ _id, updateActivity });
       return addedActivity;
     }

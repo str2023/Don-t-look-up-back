@@ -13,7 +13,7 @@ const addUser = async ({ email, nickName, password, birthDate, gender }) => {
   // 비밀번호 해쉬화
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = { email, nickName, password: hashedPassword };
+  const newUser = { email, nickName, password: hashedPassword, birthDate, gender };
 
   // db에 저장
   const createdNewUser = await User.create({ newUser });

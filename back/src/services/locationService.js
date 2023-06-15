@@ -4,8 +4,13 @@ const Location = require('../db/models/Location');
 const LLC2DFS = require('../utils/llc2dfs');
 
 // 카카오 로컬 API를 호출하여 지도->위경도->좌표 순으로 데이터를 변환하여 locationData에 저장
-const getAddressInfo = async ({ area }) => {
-  const addressInfo = await locationAPI.getAddress({ area }); // API 통신으로 로컬정보 받아오기
+const getAddressInfo = async ({ area, lat, lon }) => {
+  let addressInfo = {};
+  if (lat) {
+    addressInfo = await locationAPI.getAddressByWGS({ lat, lon });
+  } else {
+    addressInfo = await locationAPI.getAddress({ area }); // API 통신으로 로컬정보 받아오기
+  }
   const changedXY = await LLC2DFS(addressInfo.y, addressInfo.x); // 로컬정보 중, 위-경도를 XY좌표로 바꾸기
 
   const locationNo = addressInfo.address.h_code;

@@ -25,7 +25,7 @@ const UserSchema = new Schema(
       type: Date,
     },
     gender: {
-      type: Number,
+      type: String,
     },
     location: {
       type: String,

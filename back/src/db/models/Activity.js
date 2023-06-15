@@ -32,18 +32,19 @@ const addActivity = async ({ _id, updateActivity }) => {
       activity: updateActivity,
     },
   };
+
   const updated = await ActivityModel.findOneAndUpdate({ _id }, query, { new: true });
+
   return updated;
 };
 
 const recommendActivity = async ({ _id, updateActivity }) => {
-  const addressName = updateActivity.location[0].addressName;
-  const userId = updateActivity.location[0].user[0].userId;
+  const { addressName } = updateActivity.location[0];
+  const { userId } = updateActivity.location[0].user[0];
   const { name } = updateActivity;
   const query = {
-    $push: {
-      'activity.$[i].location.$[j].user': { userId },
-    },
+    $push: { 'activity.$[i].location.$[j].user': { userId } },
+    $inc: { 'activity.$[i].location.$[j].count': 1 },
   };
   const option = {
     new: true,

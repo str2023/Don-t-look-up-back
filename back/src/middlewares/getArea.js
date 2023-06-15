@@ -1,7 +1,12 @@
 const locationService = require('../services/locationService');
 
 const getArea = async (req, res, next) => {
-  const { area } = req.query;
+  let area;
+  if (req.query.area) {
+    area = req.query.area;
+  } else if (req.body.area) {
+    area = req.body.area;
+  }
   if (!area) {
     res.status(400).send('area 요청정보가 없습니다');
     return;

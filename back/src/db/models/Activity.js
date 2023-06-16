@@ -14,9 +14,7 @@ const findAllByAddressName = async ({ temp, wx, area }) => {
   const activitiesInArea = await ActivityModel.findOne({
     temp: { $in: temp },
     wx,
-    activity: {
-      $elemMatch: { location: { $elemMatch: { addressName: area } } },
-    },
+    'activity.location': { $elemMatch: { addressName: area } },
   }).select('activity');
   return { allActivities, activitiesInArea };
 };

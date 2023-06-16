@@ -32,13 +32,15 @@ const createActivity = async ({ temp, wx, area, activity, userId }) => {
     }
 
     const b = a.location.find((e) => e.addressName === area);
-
     // 추천한 적이 없다면 추천
+    if (!b) {
+      const addedLocation = await Activity.addLocation({ _id, updateActivity });
+      return addedLocation;
+    }
     if (!b.user.find((e) => e.userId === userId)) {
       const recommendedActivity = await Activity.recommendActivity({ _id, updateActivity });
       return recommendedActivity;
     }
-
     const errorMessage = '이미 추천하였습니다.';
     return { errorMessage };
   }

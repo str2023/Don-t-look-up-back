@@ -71,7 +71,7 @@
 
 <br>
 
-![데이터 분석](../donotlookup-front/front/assets/data%EC%BA%A1%EC%B3%90.PNG)
+![Alt text](image-8.png)
 
 - 1960년대부터 꾸준히 올라간 기온은 전 지구적으로 **이상기후**를 불러왔어요.
 - 그러나, OECD를 비롯한 여러 나라의 기후 대책은 지금의 기후 변화를 막기에는 **불충분**해요.

@@ -1,7 +1,7 @@
 const kakaoRouter = require('express').Router();
 const Kakao = require('../services/kakaoService');
 
-// localhost:5001/oauth/register 접속 시, 카카오 로그인 url로 redirect되는 라우터
+// localhost:3000/oauth/register 접속 시, 카카오 로그인 url로 redirect되는 라우터
 kakaoRouter.get('/register', (req, res) => {
   const kakaoURL = Kakao.getKakaoRegisterURL();
 
@@ -9,7 +9,7 @@ kakaoRouter.get('/register', (req, res) => {
   res.redirect(kakaoURL);
 });
 
-// localhost:5001/oauth/login 접속 시, 카카오 로그인 url로 redirect되는 라우터
+// localhost:3000/oauth/login 접속 시, 카카오 로그인 url로 redirect되는 라우터
 kakaoRouter.get('/login', (req, res) => {
   const kakaoURL = Kakao.getKakaoLoginURL();
 
@@ -17,7 +17,7 @@ kakaoRouter.get('/login', (req, res) => {
   res.redirect(kakaoURL);
 });
 
-// 로그인 이후 /oauth/register/callback 으로 redirect 되었을 때 토큰을 받아오는 라우터
+// 로그인 이후 /register/callback 으로 redirect 되었을 때 토큰을 받아오는 라우터
 kakaoRouter.get('/register/callback', async (req, res) => {
   const accessToken = await Kakao.getKakaoRegisterToken(req, res);
   const kakaoUserInfo = await Kakao.getKakaoUserInfo({ accessToken });
@@ -45,13 +45,12 @@ kakaoRouter.get('/register/callback', async (req, res) => {
 kakaoRouter.get('/login/callback', async (req, res) => {
   const accessToken = await Kakao.getKakaoLoginToken(req, res);
   const kakaoUserInfo = await Kakao.getKakaoUserInfo({ accessToken });
-
   // 카카오 사용자 정보를 정제하여 loginInfo에 저장
   const { email } = kakaoUserInfo.kakao_account;
 
   const loggedInKakaoUser = await Kakao.getKakaoUser({ email });
 
-  res.status(200).send(loggedInKakaoUser);
+  res.status(200).json(loggedInKakaoUser);
   console.log(loggedInKakaoUser);
   console.log(`Say hi to our user ${loggedInKakaoUser.nickName}!`);
 });

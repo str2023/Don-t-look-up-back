@@ -77,7 +77,7 @@ const getMthd = async ({ Area }) => {
     return CWC15Mthd;
   }
 
-  if (isTMN18 !== true) {
+  if (isTMN18 === true) {
     const CWC18 = CWCdata.filter((obj) => obj.value === '심각').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthd,
     }));

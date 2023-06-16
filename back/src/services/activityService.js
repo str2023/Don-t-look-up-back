@@ -67,7 +67,7 @@ const getActivity = async ({ temp, wx, area }) => {
   // 동네의 액티비티
   if (activitiesInArea) {
     activitiesInArea.activity.forEach((obj) => {
-      convertObj[obj.name] = obj.location.find((e) => e.addressName === area).count;
+      convertObj[obj.name] = obj.location.find((e) => e.addressName === area)?.count;
     });
   }
   // 전체 액티비티

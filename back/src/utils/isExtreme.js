@@ -6,13 +6,17 @@ const isExtreme = async ({ Area }) => {
   const ny = Area.y;
 
   const time = getTime();
+  if (['2300', '0000', '0100', '0200'].includes(time.HH)) {
+    time.YMD -= 1;
+    console.log(time);
+  }
   const date = time.YMD;
   const hour = `${0}${parseInt('230', 10)}`;
   // 오전 2시 30분 기준 초단기예보
 
   const url = '/getUltraSrtFcst';
   const res = await weatherAPI.getWeather(url, date, hour, nx, ny);
-  const data = res.data.response.body.items.item; // dtype = array
+  const data = res.data.response.body?.items?.item; // dtype = array
 
   // 초단기예보 중, 기온(T1H) 카테고리만 따로 T1H에 저장
   const T1H = data.filter((obj) => obj.category === 'T1H');

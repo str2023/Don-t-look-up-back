@@ -1,10 +1,9 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-shadow */
+const { Method } = require('../db');
 const isHWCorCWC = require('../utils/isExtreme');
 const weatherAPI = require('../utils/weatherAPI');
 
 const getMthd = async ({ Area }) => {
-  const isExtreme = await isHWCorCWC({ Area });
+  const { isTMX32, isTMX35, isTMN12, isTMN15, isTMN18 } = await isExtreme({ Area });
 
   const HWCurl = '/getHWCntrmsrMthd';
   const CWCurl = '/getCWCntrmsrMthd';
@@ -16,7 +15,7 @@ const getMthd = async ({ Area }) => {
   const CWCdata = CWCres.response.body.items.item;
 
   if (isExtreme.isTMX32 === true) {
-    const HWC32 = HWCdata.filter((obj) => obj.value === '관심').map((obj) => ({
+    const HWC32 = HWCdata.filter((obj) => obj.value == '관심').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthd,
     }));
 
@@ -32,7 +31,7 @@ const getMthd = async ({ Area }) => {
   }
 
   if (isExtreme.isTMX35 === true) {
-    const HWC35 = HWCdata.filter((obj) => obj.value === '주의').map((obj) => ({
+    const HWC35 = HWCdata.filter((obj) => obj.value == '주의').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthd,
     }));
 
@@ -47,7 +46,7 @@ const getMthd = async ({ Area }) => {
     return HWC35Mthd;
   }
 
-  if (isExtreme.isTMN12 === true) {
+  if (isTMN12 === true) {
     const CWC12 = CWCdata.filter((obj) => obj.value === '주의').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthdt,
     }));
@@ -63,7 +62,7 @@ const getMthd = async ({ Area }) => {
     return CWC12Mthd;
   }
 
-  if (isExtreme.isTMN15 === true) {
+  if (isTMN15 === true) {
     const CWC15 = CWCdata.filter((obj) => obj.value === '경고').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthd,
     }));
@@ -79,7 +78,7 @@ const getMthd = async ({ Area }) => {
     return CWC15Mthd;
   }
 
-  if (isExtreme.isTMN18 === true) {
+  if (isExtreme.isTMN18 !== true) {
     const CWC18 = CWCdata.filter((obj) => obj.value === '심각').map((obj) => ({
       [obj.cntrmsrCode]: obj.cntrmsrMthd,
     }));

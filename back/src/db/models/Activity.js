@@ -38,6 +38,21 @@ const addActivity = async ({ _id, updateActivity }) => {
   return updated;
 };
 
+const addLocation = async ({ _id, updateActivity }) => {
+  const { name, location } = updateActivity;
+  const query = {
+    $push: { 'activity.$[i].location': location[0] },
+  };
+  const option = {
+    new: true,
+    arrayFilters: [{ 'i.name': name }],
+  };
+
+  const updated = await ActivityModel.findOneAndUpdate({ _id }, query, option);
+
+  return updated;
+};
+
 const recommendActivity = async ({ _id, updateActivity }) => {
   const { addressName } = updateActivity.location[0];
   const { userId } = updateActivity.location[0].user[0];
@@ -55,4 +70,4 @@ const recommendActivity = async ({ _id, updateActivity }) => {
   return recommended;
 };
 
-module.exports = { create, findAllByAddressName, findLocationByActivity, addActivity, recommendActivity };
+module.exports = { create, findAllByAddressName, findLocationByActivity, addActivity, addLocation, recommendActivity };

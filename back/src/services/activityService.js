@@ -43,7 +43,13 @@ const createActivity = async ({ temp, wx, area, activity, userId }) => {
     return { errorMessage };
   }
 
-  // 없다면 새로운 액티비티.날씨 생성
+  // 장소만 없다면 장소 추가 후 액티비티.날씨 생성
+  if (isExist.allActivities) {
+    const { _id } = isExist.allActivities;
+    const addedLocation = await Activity.addLocation({ _id, updateActivity });
+    return addedLocation;
+  }
+
   const created = await Activity.create({ newActivity });
   return created;
 };

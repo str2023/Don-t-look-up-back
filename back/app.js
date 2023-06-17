@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.send('돈룩업 백엔드 API');
 });
-app.use([usersRouter, weatherRouter, locationRouter, outfitRouter, activityRouter, methodRouter]);
+app.use('/api', [usersRouter, weatherRouter, locationRouter, outfitRouter, activityRouter, methodRouter]);
 app.use('/oauth', kakaoRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 

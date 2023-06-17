@@ -69,7 +69,8 @@ const getActivity = async ({ temp, wx, area }) => {
   // 동네의 액티비티
   if (activitiesInArea) {
     activitiesInArea.activity.forEach((obj) => {
-      convertObj[obj.name] = obj.location.find((e) => e.addressName === area)?.count;
+      const count = obj.location.find((e) => e.addressName === area)?.count;
+      convertObj[obj.name] = count || 0;
     });
   }
   // 전체 액티비티
@@ -78,6 +79,7 @@ const getActivity = async ({ temp, wx, area }) => {
   });
 
   let activities = [];
+
   if (convertObj.lenth !== 0) {
     activities = Object.entries(convertObj)
       .sort(([, a], [, b]) => b - a) // count(추천수) 기준 내림차 정렬
